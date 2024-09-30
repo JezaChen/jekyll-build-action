@@ -1,0 +1,35 @@
+name: 'Common Jekyll Build Action for Jeza'
+description: 'Use Jekyll to build static pages, and upload'
+inputs:
+  docs-dir:
+    description: 'The path of docs directory'
+    required: true
+  site-dir:
+    description: 'The output path to store built files'
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Copy README.md to _docs
+      run: cp README.md ${{ inputs.docs-dir }}/README.md
+
+    - name: Setup Pages
+      uses: actions/configure-pages@v5
+
+    - name: Build with Jekyll
+      uses: actions/jekyll-build-pages@v1
+      with:
+        source: ${{ inputs.docs-dir }}
+        destination: ${{ inputs.site-dir }}
+
+    - name: Upload artifact
+      uses: actions/upload-pages-artifact@v3
+
+    - name: Upload _site
+      uses: actions/upload-artifact@v4
+      with:
+        name: built-site
+        path: ${{ inputs.site-dir }}
+
