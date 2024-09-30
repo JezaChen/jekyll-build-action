@@ -6,6 +6,8 @@ inputs:
     required: true
   site-dir:
     description: 'The output path to store built files'
+    require: false
+    default: ./_site
 runs:
   using: "composite"
   steps:
