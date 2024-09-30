@@ -16,6 +16,7 @@ runs:
 
     - name: Copy README.md to _docs
       run: cp README.md ${{ inputs.docs-dir }}/README.md
+      shell: bash
 
     - name: Setup Pages
       uses: actions/configure-pages@v5
