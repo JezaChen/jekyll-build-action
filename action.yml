@@ -6,7 +6,6 @@ inputs:
     required: true
   site-dir:
     description: 'The output path to store built files'
-    require: false
     default: ./_site
 runs:
   using: "composite"
@@ -15,7 +14,13 @@ runs:
       uses: actions/checkout@v4
 
     - name: Copy README.md to _docs
-      run: cp README.md ${{ inputs.docs-dir }}/README.md
+      # 复制README.md到_docs/index.md
+      # 如果有README_zh.md，可以考虑复制到_docs/zh.md
+      run: |
+           cp README.md ${{ inputs.docs-dir }}/index.md
+           if [ -f README_zh.md ]; then
+               cp README_zh.md ${{ inputs.docs-dir }}/zh.md
+           fi
       shell: bash
 
     - name: Setup Pages
